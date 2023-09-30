@@ -18,7 +18,7 @@ const getAllNotes = async (req, res) => {
   // You could also do this with a for...of loop
   const notesWithUser = await Promise.all(
     notes.map(async (note) => {
-     // const user = await User.findById(note.Assigned_To).lean().exec();
+   const user = await User.findById(note.Assigned_To).lean().exec();
       const Mantained_By_user = await User.findById(note.Mantained_By)
         .lean()
         .exec();
@@ -30,7 +30,7 @@ const getAllNotes = async (req, res) => {
         .exec();
       return {
         ...note,
-        // username: user.username,
+       username: user.username,
         Mantained_By_name: Mantained_By_user.username,
         Assigned_To_name: Assigned_To_user.username,
         Checked_By_name: Checked_By_user.username,
